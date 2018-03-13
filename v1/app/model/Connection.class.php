@@ -32,7 +32,7 @@
 		function Query( $sp, $params ){
 			if( $this->conectar() ){
 				$str_parametros = $this->FormatParams( $params );
-				$stored = "CALL " . $sp . "(" . $str_parametros . ");";
+				$stored = "CALL " . $sp . "(" . $str_parametros . ");"; // echo $stored;
 				$datos = $this->mysqli->query( $stored );
 
 				if (!$datos) {

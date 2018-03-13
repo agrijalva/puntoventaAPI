@@ -30,76 +30,18 @@ class Usuario
 					'pass' => array( 'value' => $this->pass, 'type' => 'STRING' )
 				);
 
-			$_result = $this->conn->Query( "ADM_LOGIN_SP", $params );
-
+			$_result = $this->conn->Query( "LOGIN_SP", $params );
+			
 			if( !empty( $_result ) ){
 				$_response['success'] 	= true;
 				$_response['msg']     	= 'Registros encontrados: ' . count( $_result );
+				
+				$paramsSucursales = array('idEmpresa' => array( 'value' => $_result[0]['idEmpresa'], 'type' => 'INT' ) );
+				$_resultSucursal = $this->conn->Query( "SUCURSALMOSTRAR_SP", $paramsSucursales );
+				$_result[0]['sucursales'] = $_resultSucursal;
+				
 				$_response['data'] 		= $_result;
-			}
-			else{
-				$_response['msg']     	= 'No se encontraron resultados para tu solicitud.';	
-			}			
-		}
-		
-		return $this->Request( $_response );
-	}
 
-	public function login_ejecutivo(){
-		$_response['success'] = false;
-		if( empty( $this->user ) && empty( $this->pass ) ){
-			$_response['msg']     	= 'Favor de proporcionar tus credenciales';
-		}
-		else if( empty( $this->user ) ){
-			$_response['msg']     	= 'Proporciona tu email';
-		}
-		else if( empty( $this->pass ) ){
-			$_response['msg']     	= 'Proporciona tu password';
-		}
-		else{
-			$params = array(
-					'user' => array( 'value' => $this->user, 'type' => 'STRING' ),
-					'pass' => array( 'value' => $this->pass, 'type' => 'STRING' )
-				);
-
-			$_result = $this->conn->Query( "EJE_LOGIN_SP", $params );
-
-			if( !empty( $_result ) ){
-				$_response['success'] 	= true;
-				$_response['msg']     	= 'Registros encontrados: ' . count( $_result );
-				$_response['data'] 		= $_result;
-			}
-			else{
-				$_response['msg']     	= 'No se encontraron resultados para tu solicitud.';	
-			}			
-		}
-		
-		return $this->Request( $_response );
-	}
-
-	public function login_cliente(){
-		$_response['success'] = false;
-		if( empty( $this->user ) && empty( $this->pass ) ){
-			$_response['msg']     	= 'Favor de proporcionar tus credenciales';
-		}
-		else if( empty( $this->user ) ){
-			$_response['msg']     	= 'Proporciona tu email';
-		}
-		else if( empty( $this->pass ) ){
-			$_response['msg']     	= 'Proporciona tu password';
-		}
-		else{
-			$params = array(
-					'user' => array( 'value' => $this->user, 'type' => 'STRING' ),
-					'pass' => array( 'value' => $this->pass, 'type' => 'STRING' )
-				);
-
-			$_result = $this->conn->Query( "CLI_LOGIN_SP", $params );
-
-			if( !empty( $_result ) ){
-				$_response['success'] 	= true;
-				$_response['msg']     	= 'Registros encontrados: ' . count( $_result );
-				$_response['data'] 		= $_result;
 			}
 			else{
 				$_response['msg']     	= 'No se encontraron resultados para tu solicitud.';	
