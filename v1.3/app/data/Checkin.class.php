@@ -34,7 +34,7 @@ class Checkin
 	public function entradacabecera(){
 		$_response['success'] = false;
 		if( empty( $this->cho_descripcion )){
-			$_response['msg']     	= 'Proporciona la descripción.';
+			$_response['msg']     	= 'Es necesario proporcionar una observación.';
 		}
 		else if( empty( $this->idUsuario ) ){
 			$_response['msg']     	= 'Proporciona el idUsuario.';
